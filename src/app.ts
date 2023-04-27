@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import express from "express";
 import { challengeController } from "./challengeController";
+import { challengeRepositoryFactory } from "./challengeRepository";
 
 export const appFactory = () => {
   const app = express();
@@ -13,7 +14,9 @@ export const appFactory = () => {
     res.sendStatus(200);
   });
 
-  challengeController(app, prismaClient);
+  const ChallengeRepository = challengeRepositoryFactory(prismaClient);
+
+  challengeController(app, prismaClient, ChallengeRepository);
 
   return app;
 };

@@ -7,7 +7,7 @@ export type ChallengeRepository = {
   // delete: () => Promise<void>;
 };
 
-export const ChallengeRepositoryFactory = (prismaClient: PrismaClient) => {
+export const challengeRepositoryFactory = (prismaClient: PrismaClient) => {
   return {
     getAll: () => {
       return prismaClient.challengeRow.findMany();
