@@ -1,15 +1,9 @@
-import { ChallengeRow } from "@prisma/client";
-
-export type CreateChallengeData = {
-  id: string;
-  name: string;
-  content: string;
-  level: number;
-};
+import { Challenge } from "../../internal/challenge";
+import { CreateChallengeData } from "../../internal/types";
 
 export type ChallengeRepository = {
-  getAll: () => Promise<ChallengeRow[]>;
-  getById: (id: string) => Promise<ChallengeRow | null>;
+  getAll: () => Promise<Challenge[]>;
+  getById: (id: string) => Promise<Challenge | null>;
   create: (challengeData: CreateChallengeData) => Promise<void>;
   delete: (id: string) => Promise<void>;
 };

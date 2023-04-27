@@ -1,6 +1,6 @@
 # Adapters
 
-This folder contain all thing that can adapt to our `ports`.
+This folder contain all implementations that can adapt to our `ports`.
 
 Someone can rename it `infrastructure`.
 
