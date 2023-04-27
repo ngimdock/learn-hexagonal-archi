@@ -5,7 +5,7 @@ import { ChallenceService } from "./chellengeService";
 
 export const challengeController = (
   app: Express,
-  challengeService: ChallenceService // This is a driver port
+  challengeService: ChallenceService
 ) => {
   app.get("/", (req, res) => {
     res.sendFile("postman.json", { root: path.resolve(__dirname, "../") });

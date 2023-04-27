@@ -1,10 +1,10 @@
 import { ValidationError } from "./validationError";
 import { v4 } from "uuid";
+import { ChallenceService } from "./chellengeService";
 import {
   ChallengeRepository,
   CreateChallengeData,
 } from "./challengeRepository";
-import { ChallenceService } from "./chellengeService";
 
 export const challengeServiceImplFactory = (
   challengeRepository: ChallengeRepository
