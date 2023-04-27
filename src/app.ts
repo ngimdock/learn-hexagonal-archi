@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import express from "express";
 import { challengeController } from "./challengeController";
 import { challengeRepositoryFactory } from "./challengeRepository";
+import { challengeServiceFactory } from "./challengeService";
 
 export const appFactory = () => {
   const app = express();
@@ -15,8 +16,12 @@ export const appFactory = () => {
   });
 
   const ChallengeRepository = challengeRepositoryFactory(prismaClient);
+  const challengeService = challengeServiceFactory(
+    prismaClient,
+    ChallengeRepository
+  );
 
-  challengeController(app, prismaClient, ChallengeRepository);
+  challengeController(app, challengeService);
 
   return app;
 };

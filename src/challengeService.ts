@@ -1,18 +1,25 @@
-import { PrismaClient } from "@prisma/client";
+import { ChallengeRow, PrismaClient } from "@prisma/client";
 import { ValidationError } from "./validationError";
 import { v4 } from "uuid";
 import { ChallengeRepository } from "./challengeRepository";
 
+export type ChallenceService = {
+  getChallenges: () => Promise<ChallengeRow[]>;
+  getChallenge: (id: string) => Promise<ChallengeRow>;
+  createChallenge: (name: string, content: string) => Promise<string>;
+  deleteChallenge: (id: string) => Promise<null>;
+};
+
 export const challengeServiceFactory = (
   prismaClient: PrismaClient,
   challengeRepository: ChallengeRepository
-) => {
+): ChallenceService => {
   return {
     getChallenges: () => {
       return challengeRepository.getAll();
     },
 
-    getChallenge: async (id: string) => {
+    getChallenge: async (id) => {
       if (typeof id !== "string") {
         throw new ValidationError();
       }
@@ -26,7 +33,7 @@ export const challengeServiceFactory = (
       return challenge;
     },
 
-    createChallenge: async (name: string, content: string) => {
+    createChallenge: async (name, content) => {
       if (typeof name !== "string" || typeof content !== "string")
         throw new ValidationError();
 
@@ -48,10 +55,13 @@ export const challengeServiceFactory = (
 
       return id;
     },
-    deleteChallenge: (id: string) => {
+
+    deleteChallenge: async (id) => {
       if (typeof id !== "string") throw new ValidationError();
 
-      return prismaClient.challengeRow.delete({ where: { id } });
+      await prismaClient.challengeRow.delete({ where: { id } });
+
+      return null;
     },
   };
 };
