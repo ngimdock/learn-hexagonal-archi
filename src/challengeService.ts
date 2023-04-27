@@ -1,6 +1,10 @@
-export const challengeService = () => {
+import { PrismaClient } from "@prisma/client";
+
+export const challengeServiceFactory = (prismaClient: PrismaClient) => {
   return {
-    getChallenges: () => {},
+    getChallenges: () => {
+      return prismaClient.challengeRow.findMany();
+    },
     getChallenge: () => {},
     createChallenge: () => {},
     deleteChallenge: () => {},
