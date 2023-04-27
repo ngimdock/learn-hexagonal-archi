@@ -1,11 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 import { ValidationError } from "./validationError";
 import { v4 } from "uuid";
+import { ChallengeRepository } from "./challengeRepository";
 
-export const challengeServiceFactory = (prismaClient: PrismaClient) => {
+export const challengeServiceFactory = (
+  prismaClient: PrismaClient,
+  challengeRepository: ChallengeRepository
+) => {
   return {
-    getChallenges: async () => {
-      return prismaClient.challengeRow.findMany();
+    getChallenges: () => {
+      return challengeRepository.getAll();
     },
 
     getChallenge: async (id: string) => {

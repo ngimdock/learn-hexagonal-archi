@@ -1,10 +1,19 @@
-import { PrismaClient } from "@prisma/client";
+import { ChallengeRow, PrismaClient } from "@prisma/client";
 
-export const challengeRepository = (prismaClient: PrismaClient) => {
+export type ChallengeRepository = {
+  getAll: () => Promise<ChallengeRow[]>;
+  // getById: () => Promise<ChallengeRow>;
+  // create: () => Promise<string>;
+  // delete: () => Promise<void>;
+};
+
+export const ChallengeRepositoryFactory = (prismaClient: PrismaClient) => {
   return {
-    getAll: () => {},
-    getById: () => {},
-    create: () => {},
-    delete: () => {},
+    getAll: () => {
+      return prismaClient.challengeRow.findMany();
+    },
+    // getById: () => {},
+    // create: () => {},
+    // delete: () => {},
   };
 };
