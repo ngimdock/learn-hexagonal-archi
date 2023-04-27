@@ -1,11 +1,11 @@
 import { Express } from "express";
 import path from "path";
 import { ValidationError } from "./validationError";
-import { ChallenceServiceImpl } from "./challengeServiceImpl";
+import { ChallenceService } from "./chellengeService";
 
 export const challengeController = (
   app: Express,
-  challengeService: ChallenceServiceImpl
+  challengeService: ChallenceService // This is a driver port
 ) => {
   app.get("/", (req, res) => {
     res.sendFile("postman.json", { root: path.resolve(__dirname, "../") });

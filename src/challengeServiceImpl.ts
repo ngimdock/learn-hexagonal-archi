@@ -1,21 +1,14 @@
-import { ChallengeRow } from "@prisma/client";
 import { ValidationError } from "./validationError";
 import { v4 } from "uuid";
 import {
   ChallengeRepository,
   CreateChallengeData,
 } from "./challengeRepository";
+import { ChallenceService } from "./chellengeService";
 
-export type ChallenceServiceImpl = {
-  getChallenges: () => Promise<ChallengeRow[]>;
-  getChallenge: (id: string) => Promise<ChallengeRow>;
-  createChallenge: (name: string, content: string) => Promise<string>;
-  deleteChallenge: (id: string) => Promise<void>;
-};
-
-export const challengeServiceFactory = (
+export const challengeServiceImplFactory = (
   challengeRepository: ChallengeRepository
-): ChallenceServiceImpl => {
+): ChallenceService => {
   return {
     getChallenges: () => {
       return challengeRepository.getAll();
