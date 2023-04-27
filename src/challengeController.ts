@@ -26,7 +26,7 @@ export const challengeController = (
       const challenge = await challengeService.getChallenge(id);
       res.json(challenge);
     } catch (error) {
-      if (error instanceof ValidationError) res.sendStatus(4000);
+      if (error instanceof ValidationError) return res.sendStatus(4000);
 
       res.sendStatus(500);
     }
@@ -49,8 +49,14 @@ export const challengeController = (
   app.delete("/api/challenges/:id", async (req, res) => {
     const id = req.params.id;
 
-    await challengeService.deleteChallenge(id);
+    try {
+      await challengeService.deleteChallenge(id);
 
-    res.sendStatus(200);
+      res.sendStatus(200);
+    } catch (error) {
+      if (error instanceof ValidationError) return res.sendStatus(400);
+
+      return res.sendStatus(500);
+    }
   });
 };
