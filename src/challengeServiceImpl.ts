@@ -6,7 +6,7 @@ import {
   CreateChallengeData,
 } from "./challengeRepository";
 
-export type ChallenceService = {
+export type ChallenceServiceImpl = {
   getChallenges: () => Promise<ChallengeRow[]>;
   getChallenge: (id: string) => Promise<ChallengeRow>;
   createChallenge: (name: string, content: string) => Promise<string>;
@@ -15,7 +15,7 @@ export type ChallenceService = {
 
 export const challengeServiceFactory = (
   challengeRepository: ChallengeRepository
-): ChallenceService => {
+): ChallenceServiceImpl => {
   return {
     getChallenges: () => {
       return challengeRepository.getAll();
