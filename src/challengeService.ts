@@ -1,4 +1,4 @@
-import { ChallengeRow, PrismaClient } from "@prisma/client";
+import { ChallengeRow } from "@prisma/client";
 import { ValidationError } from "./validationError";
 import { v4 } from "uuid";
 import {
@@ -14,7 +14,6 @@ export type ChallenceService = {
 };
 
 export const challengeServiceFactory = (
-  prismaClient: PrismaClient,
   challengeRepository: ChallengeRepository
 ): ChallenceService => {
   return {
