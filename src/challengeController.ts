@@ -3,6 +3,7 @@ import { v4 } from "uuid";
 import path from "path";
 import { PrismaClient } from "@prisma/client";
 import { challengeServiceFactory } from "./challengeService";
+import { ValidationError } from "./validationError";
 
 export const challengeController = (
   app: Express,
@@ -21,9 +22,14 @@ export const challengeController = (
   app.get("/api/challenges/:id", async (req, res) => {
     const id = req.params.id;
 
-    const challenge = await challengeService.getChallenge(id);
+    try {
+      const challenge = await challengeService.getChallenge(id);
+      res.json(challenge);
+    } catch (error) {
+      if (error instanceof ValidationError) res.sendStatus(4000);
 
-    res.json(challenge);
+      res.sendStatus(500);
+    }
   });
 
   app.post("/api/challenges", async (req, res) => {
