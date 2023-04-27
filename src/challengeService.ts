@@ -1,13 +1,16 @@
 import { ChallengeRow, PrismaClient } from "@prisma/client";
 import { ValidationError } from "./validationError";
 import { v4 } from "uuid";
-import { ChallengeRepository } from "./challengeRepository";
+import {
+  ChallengeRepository,
+  CreateChallengeData,
+} from "./challengeRepository";
 
 export type ChallenceService = {
   getChallenges: () => Promise<ChallengeRow[]>;
   getChallenge: (id: string) => Promise<ChallengeRow>;
   createChallenge: (name: string, content: string) => Promise<string>;
-  deleteChallenge: (id: string) => Promise<null>;
+  deleteChallenge: (id: string) => Promise<void>;
 };
 
 export const challengeServiceFactory = (
@@ -47,9 +50,14 @@ export const challengeServiceFactory = (
 
       const id = v4();
 
-      await prismaClient.challengeRow.create({
-        data: { id, name, content, level },
-      });
+      const challengeData: CreateChallengeData = {
+        id,
+        name,
+        content,
+        level,
+      };
+
+      await challengeRepository.create(challengeData);
 
       return id;
     },
@@ -57,9 +65,7 @@ export const challengeServiceFactory = (
     deleteChallenge: async (id) => {
       if (typeof id !== "string") throw new ValidationError();
 
-      await prismaClient.challengeRow.delete({ where: { id } });
-
-      return null;
+      await challengeRepository.delete(id);
     },
   };
 };
