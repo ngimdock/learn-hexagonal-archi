@@ -1,7 +1,7 @@
 import { Express } from "express";
 import path from "path";
-import { ValidationError } from "./validationError";
-import { ChallenceService } from "./chellengeService";
+import { ValidationError } from "../../validationError";
+import { ChallenceService } from "../../hexagon/ports/driver/chellengeService";
 
 export const challengeController = (
   app: Express,

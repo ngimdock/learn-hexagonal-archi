@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import {
   ChallengeRepository,
   CreateChallengeData,
-} from "./challengeRepository";
+} from "../../hexagon/ports/driven/challengeRepository";
 
 export const challengeRepositoryImplFactory = (
   prismaClient: PrismaClient
