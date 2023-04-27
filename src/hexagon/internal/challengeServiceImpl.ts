@@ -5,9 +5,11 @@ import {
   ChallengeRepository,
   CreateChallengeData,
 } from "../ports/driven/challengeRepository";
+import { TimeProvider } from "../ports/driven/timeProvider";
 
 export const challengeServiceImplFactory = (
-  challengeRepository: ChallengeRepository
+  challengeRepository: ChallengeRepository,
+  timeProvider: TimeProvider
 ): ChallenceService => {
   return {
     getChallenges: () => {
@@ -30,7 +32,7 @@ export const challengeServiceImplFactory = (
       if (typeof name !== "string" || typeof content !== "string")
         throw new ValidationError();
 
-      const today = new Date();
+      const today = timeProvider.getTime();
       const MONDAY = 1;
       let level = 1;
 

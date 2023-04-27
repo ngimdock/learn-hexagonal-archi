@@ -3,6 +3,7 @@ import express from "express";
 import { challengeController } from "./adapters/driver/challengeController";
 import { challengeServiceImplFactory } from "./hexagon/internal/challengeServiceImpl";
 import { challengeRepositoryImplFactory } from "./adapters/driven/challengeRepositoryImpl";
+import { systemTimeProvider } from "./adapters/driven/systemTimeProvider";
 
 export const appFactory = () => {
   const app = express();
@@ -16,7 +17,12 @@ export const appFactory = () => {
   });
 
   const ChallengeRepository = challengeRepositoryImplFactory(prismaClient);
-  const challengeService = challengeServiceImplFactory(ChallengeRepository);
+  const timeProvider = systemTimeProvider();
+
+  const challengeService = challengeServiceImplFactory(
+    ChallengeRepository,
+    timeProvider
+  );
 
   challengeController(app, challengeService);
 
